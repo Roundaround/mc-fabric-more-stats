@@ -4,6 +4,10 @@
   "package": "me.roundaround.morestats.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
+    "DamageTrackerMixin",
+    "IntegratedServerMixin",
+    "PlayerEntityMixin",
+    "SculkShriekerBlockEntityMixin"
   ],
   "client": [],
   "server": [],

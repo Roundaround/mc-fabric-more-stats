@@ -11,5 +11,7 @@ public final class MoreStatsMod implements ModInitializer {
 
   @Override
   public void onInitialize() {
+    // Force load MoreStats class and all the static register calls
+    MoreStats.load();
   }
 }
