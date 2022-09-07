@@ -6,6 +6,7 @@
   "mixins": [
     "DamageTrackerMixin",
     "IntegratedServerMixin",
+    "LivingEntityMixin",
     "PlayerEntityMixin",
     "SculkShriekerBlockEntityMixin"
   ],

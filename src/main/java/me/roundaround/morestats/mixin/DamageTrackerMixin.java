@@ -24,6 +24,14 @@ public abstract class DamageTrackerMixin {
     }
 
     PlayerEntity player = (PlayerEntity) entity;
+
+    float remaining = originalHealth - damage;
+    if (originalHealth > 4f && remaining <= 4f && remaining > 0.5f) {
+      player.incrementStat(MoreStats.CLOSE_CALL);
+    } else if (originalHealth > 0.5f && remaining <= 0.5f && remaining > 0f) {
+      player.incrementStat(MoreStats.VERY_CLOSE_CALL);
+    }
+
     int amount = Math.round(damage * 10f);
 
     if (damageSource == DamageSource.FLY_INTO_WALL) {
