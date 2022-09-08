@@ -26,9 +26,9 @@ public abstract class DamageTrackerMixin {
     PlayerEntity player = (PlayerEntity) entity;
 
     float remaining = originalHealth - damage;
-    if (originalHealth > 4f && remaining <= 4f && remaining > 0.5f) {
+    if (originalHealth > 4f && remaining <= 4f && remaining > 1f) {
       player.incrementStat(MoreStats.CLOSE_CALL);
-    } else if (originalHealth > 0.5f && remaining <= 0.5f && remaining > 0f) {
+    } else if (originalHealth > 1f && remaining <= 1f && remaining > 0f) {
       player.incrementStat(MoreStats.VERY_CLOSE_CALL);
     }
 
