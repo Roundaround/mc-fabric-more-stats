@@ -46,6 +46,8 @@ public abstract class DamageTrackerMixin {
     } else if (damageSource == DamageSource.IN_FIRE || damageSource == DamageSource.LAVA
         || damageSource == DamageSource.ON_FIRE) {
       player.increaseStat(MoreStats.FIRE_DAMAGE, amount);
+    } else if (damageSource == DamageSource.FREEZE) {
+      player.increaseStat(MoreStats.POWDER_SNOW_DAMAGE, amount);
     }
   }
 }

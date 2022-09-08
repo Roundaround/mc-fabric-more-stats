@@ -25,11 +25,13 @@ public class MoreStats {
   public static final Identifier HUNGRY_TIME = register("hungry_time", StatFormatter.TIME);
   public static final Identifier STARVE_TIME = register("starve_time", StatFormatter.TIME);
   public static final Identifier PAUSE_TIME = register("pause_time", StatFormatter.TIME);
+  public static final Identifier POWDER_SNOW_TIME = register("powder_snow_time", StatFormatter.TIME);
   public static final Identifier FIRE_DAMAGE = register("fire_damage", StatFormatter.DIVIDE_BY_TEN);
   public static final Identifier FALL_DAMAGE = register("fall_damage", StatFormatter.DIVIDE_BY_TEN);
   public static final Identifier CRUNCH_DAMAGE = register("crunch_damage", StatFormatter.DIVIDE_BY_TEN);
   public static final Identifier DROWN_DAMAGE = register("drown_damage", StatFormatter.DIVIDE_BY_TEN);
   public static final Identifier STARVE_DAMAGE = register("starve_damage", StatFormatter.DIVIDE_BY_TEN);
+  public static final Identifier POWDER_SNOW_DAMAGE = register("powder_snow_damage", StatFormatter.DIVIDE_BY_TEN);
 
   private static Identifier register(String id, StatFormatter formatter) {
     Identifier identifier = new Identifier(MoreStatsMod.MOD_ID, id);

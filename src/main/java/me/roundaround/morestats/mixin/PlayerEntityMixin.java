@@ -40,5 +40,9 @@ public abstract class PlayerEntityMixin {
     if (self.getActiveStatusEffects().values().stream().anyMatch(StatusEffectInstance::isAmbient)) {
       self.incrementStat(MoreStats.BEACON_TIME);
     }
+
+    if (self.inPowderSnow) {
+      self.incrementStat(MoreStats.POWDER_SNOW_TIME);
+    }
   }
 }
