@@ -16,6 +16,7 @@ public class MoreStats {
   public static final Identifier PLAYED_HOURS = register("play_hours", TICKS_TO_HOURS);
   public static final Identifier CRUNCH = register("crunch", StatFormatter.DEFAULT);
   public static final Identifier SHREIKER_TRIGGER = register("shreiker_trigger", StatFormatter.DEFAULT);
+  public static final Identifier WARDEN_SUMMON = register("warden_summon", StatFormatter.DEFAULT);
   public static final Identifier TOTEM_POP = register("totem_pop", StatFormatter.DEFAULT);
   public static final Identifier CLOSE_CALL = register("close_call", StatFormatter.DEFAULT);
   public static final Identifier VERY_CLOSE_CALL = register("very_close_call", StatFormatter.DEFAULT);
