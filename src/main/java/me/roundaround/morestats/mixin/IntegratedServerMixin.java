@@ -13,9 +13,7 @@ import net.minecraft.server.network.ServerPlayerEntity;
 public abstract class IntegratedServerMixin {
   @Inject(method = "incrementTotalWorldTimeStat", at = @At(value = "HEAD"))
   public void onIncrementTotalWorldTimeStat(CallbackInfo info) {
-    IntegratedServer self = (IntegratedServer) (Object) this;
-    
-    for (ServerPlayerEntity player : self.getPlayerManager().getPlayerList()) {
+    for (ServerPlayerEntity player : ((IntegratedServer) (Object) this).getPlayerManager().getPlayerList()) {
       player.incrementStat(MoreStats.PAUSE_TIME);
     }
 
