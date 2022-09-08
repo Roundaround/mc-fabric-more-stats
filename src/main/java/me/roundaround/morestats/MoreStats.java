@@ -33,6 +33,7 @@ public class MoreStats {
   public static final Identifier DROWN_DAMAGE = register("drown_damage", StatFormatter.DIVIDE_BY_TEN);
   public static final Identifier STARVE_DAMAGE = register("starve_damage", StatFormatter.DIVIDE_BY_TEN);
   public static final Identifier POWDER_SNOW_DAMAGE = register("powder_snow_damage", StatFormatter.DIVIDE_BY_TEN);
+  public static final Identifier ENDER_PEARL_ONE_CM = register("ender_pearl_one_cm", StatFormatter.DISTANCE);
 
   private static Identifier register(String id, StatFormatter formatter) {
     Identifier identifier = new Identifier(MoreStatsMod.MOD_ID, id);
