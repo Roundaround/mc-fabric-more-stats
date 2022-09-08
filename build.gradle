@@ -30,6 +30,9 @@ dependencies {
 
   // ModMenu integration
   modCompileOnly "com.terraformersmc:modmenu:${project.mod_menu_version}"
+
+  // Test using real account
+  modImplementation "com.ptsmods:devlogin:${project.dev_login_version}"
 }
 
 processResources {

@@ -13,10 +13,10 @@ import net.minecraft.server.network.ServerPlayerEntity;
 public abstract class IntegratedServerMixin {
   @Inject(method = "incrementTotalWorldTimeStat", at = @At(value = "HEAD"))
   public void onIncrementTotalWorldTimeStat(CallbackInfo info) {
-    try (IntegratedServer self = (IntegratedServer) (Object) this) {
-      for (ServerPlayerEntity player : self.getPlayerManager().getPlayerList()) {
-        player.incrementStat(MoreStats.PAUSE_TIME);
-      }
+    IntegratedServer self = (IntegratedServer) (Object) this;
+    
+    for (ServerPlayerEntity player : self.getPlayerManager().getPlayerList()) {
+      player.incrementStat(MoreStats.PAUSE_TIME);
     }
 
     // TODO: MinecraftServer.tick increment this stat if MultiplayerServerPause
