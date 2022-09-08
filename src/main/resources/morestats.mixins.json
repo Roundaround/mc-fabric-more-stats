@@ -4,8 +4,12 @@
   "package": "me.roundaround.morestats.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
+    "AnvilScreenHandlerMixin",
     "DamageTrackerMixin",
+    "EnchantmentScreenHandlerMixin",
     "EnderPearlEntityMixin",
+    "ExperienceOrbEntityAccessor",
+    "ExperienceOrbEntityMixin",
     "IntegratedServerMixin",
     "LivingEntityMixin",
     "PlayerEntityMixin",
