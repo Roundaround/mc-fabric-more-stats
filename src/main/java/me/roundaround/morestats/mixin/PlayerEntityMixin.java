@@ -9,6 +9,7 @@ import me.roundaround.morestats.MoreStats;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffectUtil;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
 
 @Mixin(PlayerEntity.class)
 public abstract class PlayerEntityMixin {
@@ -44,5 +45,11 @@ public abstract class PlayerEntityMixin {
     if (self.inPowderSnow) {
       self.incrementStat(MoreStats.POWDER_SNOW_TIME);
     }
+  }
+
+  @Inject(method = "applyEnchantmentCosts", at = @At(value = "HEAD"))
+  public void applyEnchantmentCosts(ItemStack stack, int cost, CallbackInfo info) {
+    PlayerEntity self = (PlayerEntity) (Object) this;
+    self.increaseStat(MoreStats.ENCHANT_XP, cost);
   }
 }

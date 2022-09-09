@@ -38,7 +38,7 @@ public class MoreStats {
   public static final Identifier ENCHANT_XP = register("enchant_xp", StatFormatter.DEFAULT);
   public static final Identifier ANVIL_BREAK = register("anvil_break", StatFormatter.DEFAULT);
   public static final Identifier ITEM_RENAME = register("item_rename", StatFormatter.DEFAULT);
-  public static final Identifier MENDING_REPAIR = register("anvil_repair", StatFormatter.DEFAULT);
+  public static final Identifier MENDING_REPAIR = register("mending_repair", StatFormatter.DEFAULT);
 
   private static Identifier register(String id, StatFormatter formatter) {
     Identifier identifier = new Identifier(MoreStatsMod.MOD_ID, id);

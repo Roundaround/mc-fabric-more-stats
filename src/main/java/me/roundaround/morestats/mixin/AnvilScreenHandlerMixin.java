@@ -10,6 +10,8 @@ import me.roundaround.morestats.MoreStats;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.screen.AnvilScreenHandler;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 
 @Mixin(AnvilScreenHandler.class)
 public abstract class AnvilScreenHandlerMixin {
@@ -28,8 +30,8 @@ public abstract class AnvilScreenHandlerMixin {
     }
   }
 
-  @Inject(method = "onTakeOutput", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/World;removeBlock(Lnet/minecraft/util/math/BlockPos;Z)Z"))
-  public void onBreakAnvil(PlayerEntity player, ItemStack stack, CallbackInfo info) {
+  @Inject(method = "method_24922", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/World;removeBlock(Lnet/minecraft/util/math/BlockPos;Z)Z"))
+  private static void onBreakAnvil(PlayerEntity player, World world, BlockPos blockPos, CallbackInfo info) {
     player.incrementStat(MoreStats.ANVIL_BREAK);
   }
 }

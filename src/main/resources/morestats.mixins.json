@@ -6,10 +6,10 @@
   "mixins": [
     "AnvilScreenHandlerMixin",
     "DamageTrackerMixin",
-    "EnchantmentScreenHandlerMixin",
     "EnderPearlEntityMixin",
     "ExperienceOrbEntityAccessor",
     "ExperienceOrbEntityMixin",
+    "ForgingScreenHandlerMixin",
     "IntegratedServerMixin",
     "LivingEntityMixin",
     "PlayerEntityMixin",
