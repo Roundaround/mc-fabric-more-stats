@@ -39,6 +39,7 @@ public class MoreStats {
   public static final Identifier ANVIL_BREAK = register("anvil_break", StatFormatter.DEFAULT);
   public static final Identifier ITEM_RENAME = register("item_rename", StatFormatter.DEFAULT);
   public static final Identifier MENDING_REPAIR = register("mending_repair", StatFormatter.DEFAULT);
+  public static final Identifier TOGGLE_PERSPECTIVE = register("toggle_perspective", StatFormatter.DEFAULT);
 
   private static Identifier register(String id, StatFormatter formatter) {
     Identifier identifier = new Identifier(MoreStatsMod.MOD_ID, id);

@@ -15,7 +15,9 @@
     "PlayerEntityMixin",
     "SculkShriekerBlockEntityMixin"
   ],
-  "client": [],
+  "client": [
+    "MinecraftClientMixin"
+  ],
   "server": [],
   "injectors": {
     "defaultRequire": 1

@@ -18,6 +18,9 @@
   "entrypoints": {
     "main": [
       "me.roundaround.morestats.MoreStatsMod"
+    ],
+    "client": [
+      "me.roundaround.morestats.client.MoreStatsClientMod"
     ]
   },
   "mixins": [
