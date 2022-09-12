@@ -12,7 +12,7 @@ import net.minecraft.server.network.ServerPlayerEntity;
 
 @Mixin(LivingEntity.class)
 public abstract class LivingEntityMixin {
-  @Inject(method = "tryUseTotem", at = @At(value = "INVOKE", target = "Lnet/minecraft/advancement/criterion/UsedTotemCriterion;trigger"))
+  @Inject(method = "tryUseTotem", at = @At(value = "INVOKE", target = "Lnet/minecraft/advancement/criterion/UsedTotemCriterion;trigger(Lnet/minecraft/server/network/ServerPlayerEntity;Lnet/minecraft/item/ItemStack;)V"))
   public void onTotemPop(DamageSource source, CallbackInfoReturnable<Boolean> info) {
     ServerPlayerEntity player = (ServerPlayerEntity) (Object) this;
     player.incrementStat(MoreStats.TOTEM_POP);

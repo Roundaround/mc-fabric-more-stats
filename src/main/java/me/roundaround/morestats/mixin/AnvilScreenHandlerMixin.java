@@ -30,7 +30,7 @@ public abstract class AnvilScreenHandlerMixin {
     }
   }
 
-  @Inject(method = "method_24922", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/World;removeBlock(Lnet/minecraft/util/math/BlockPos;Z)Z"))
+  @Inject(method = "method_24922(Lnet/minecraft/entity/player/PlayerEntity;Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/World;removeBlock(Lnet/minecraft/util/math/BlockPos;Z)Z"))
   private static void onBreakAnvil(PlayerEntity player, World world, BlockPos blockPos, CallbackInfo info) {
     player.incrementStat(MoreStats.ANVIL_BREAK);
   }
