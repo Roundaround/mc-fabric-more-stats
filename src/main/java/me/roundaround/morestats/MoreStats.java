@@ -33,6 +33,7 @@ public class MoreStats {
   public static final Identifier DROWN_DAMAGE = register("drown_damage", StatFormatter.DIVIDE_BY_TEN);
   public static final Identifier STARVE_DAMAGE = register("starve_damage", StatFormatter.DIVIDE_BY_TEN);
   public static final Identifier POWDER_SNOW_DAMAGE = register("powder_snow_damage", StatFormatter.DIVIDE_BY_TEN);
+  public static final Identifier ENDER_PEARL_DAMAGE = register("ender_pearl_damage", StatFormatter.DIVIDE_BY_TEN);
   public static final Identifier ENDER_PEARL_ONE_CM = register("ender_pearl_one_cm", StatFormatter.DISTANCE);
   public static final Identifier ANVIL_XP = register("anvil_xp", StatFormatter.DEFAULT);
   public static final Identifier ENCHANT_XP = register("enchant_xp", StatFormatter.DEFAULT);

@@ -5,9 +5,12 @@ import java.util.Optional;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.ModifyArgs;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
 
 import me.roundaround.morestats.MoreStats;
+import me.roundaround.morestats.util.Memory;
 import net.minecraft.entity.projectile.thrown.EnderPearlEntity;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.hit.HitResult;
@@ -48,5 +51,21 @@ public abstract class EnderPearlEntityMixin {
     }
 
     position = Optional.empty();
+  }
+
+  @ModifyArgs(method = "onCollision", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/Entity;damage(Lnet/minecraft/entity/damage/DamageSource;F)Z"))
+  public void onDamage(Args args) {
+    EnderPearlEntity self = (EnderPearlEntity) (Object) this;
+
+    if (!(self.getOwner() instanceof ServerPlayerEntity)) {
+      return;
+    }
+
+    ServerPlayerEntity player = (ServerPlayerEntity) self.getOwner();
+    float damage = args.get(1);
+    
+    int amount = Math.round(damage * 10f);
+    player.increaseStat(MoreStats.ENDER_PEARL_DAMAGE, amount);
+    Memory.LATEST_FALL_FROM_PEARL.add(player.getUuid());
   }
 }
