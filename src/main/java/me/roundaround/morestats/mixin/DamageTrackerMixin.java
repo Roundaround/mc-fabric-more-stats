@@ -10,6 +10,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import me.roundaround.morestats.MoreStats;
 import me.roundaround.morestats.util.Memory;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.damage.DamageTracker;
@@ -22,7 +23,13 @@ public abstract class DamageTrackerMixin {
 
   @Inject(method = "onDamage", at = @At(value = "HEAD"))
   public void onDamage(DamageSource damageSource, float originalHealth, float damage, CallbackInfo info) {
+    int amount = Math.round(damage * 10f);
+    Entity attacker = damageSource.getAttacker();
+
     if (!(entity instanceof PlayerEntity)) {
+      if (attacker instanceof PlayerEntity) {
+        ((PlayerEntity) attacker).increaseStat(MoreStats.DAMAGED.getOrCreateStat(entity.getType()), amount);
+      }
       return;
     }
 
@@ -35,14 +42,18 @@ public abstract class DamageTrackerMixin {
       player.incrementStat(MoreStats.VERY_CLOSE_CALL);
     }
 
-    int amount = Math.round(damage * 10f);
+    if (attacker != null) {
+      player.increaseStat(MoreStats.DAMAGED_BY.getOrCreateStat(attacker.getType()), amount);
+    }
 
     if (damageSource == DamageSource.FLY_INTO_WALL) {
       player.incrementStat(MoreStats.CRUNCH);
       player.increaseStat(MoreStats.CRUNCH_DAMAGE, amount);
     } else if (damageSource == DamageSource.FALL) {
       UUID uuid = player.getUuid();
-      if (!Memory.LATEST_FALL_FROM_PEARL.contains(uuid)) {
+      if (Memory.LATEST_FALL_FROM_PEARL.contains(uuid)) {
+        player.increaseStat(MoreStats.ENDER_PEARL_DAMAGE, amount);
+      } else {
         player.increaseStat(MoreStats.FALL_DAMAGE, amount);
       }
       Memory.LATEST_FALL_FROM_PEARL.remove(uuid);

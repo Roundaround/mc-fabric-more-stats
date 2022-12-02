@@ -2,7 +2,9 @@ package me.roundaround.morestats;
 
 import java.util.Locale;
 
+import net.minecraft.entity.EntityType;
 import net.minecraft.stat.StatFormatter;
+import net.minecraft.stat.StatType;
 import net.minecraft.stat.Stats;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
@@ -13,11 +15,20 @@ public class MoreStats {
     return String.format(Locale.ROOT, "%.3f", hours);
   };
 
+  public static final StatType<EntityType<?>> DAMAGED = registerType("damaged", Registry.ENTITY_TYPE);
+  public static final StatType<EntityType<?>> DAMAGED_BY = registerType("damaged_by", Registry.ENTITY_TYPE);
   public static final Identifier PLAYED_HOURS = register("play_hours", TICKS_TO_HOURS);
   public static final Identifier CRUNCH = register("crunch", StatFormatter.DEFAULT);
   public static final Identifier SHREIKER_TRIGGER = register("shreiker_trigger", StatFormatter.DEFAULT);
   public static final Identifier WARDEN_SUMMON = register("warden_summon", StatFormatter.DEFAULT);
   public static final Identifier TOTEM_POP = register("totem_pop", StatFormatter.DEFAULT);
+  public static final Identifier CRUNCH_TOTEM_POP = register("crunch_totem_pop", StatFormatter.DEFAULT);
+  public static final Identifier ENDER_PEARL_TOTEM_POP = register("ender_pearl_totem_pop", StatFormatter.DEFAULT);
+  public static final Identifier FALL_TOTEM_POP = register("fall_totem_pop", StatFormatter.DEFAULT);
+  public static final Identifier DROWN_TOTEM_POP = register("drown_totem_pop", StatFormatter.DEFAULT);
+  public static final Identifier STARVE_TOTEM_POP = register("starve_totem_pop", StatFormatter.DEFAULT);
+  public static final Identifier FIRE_TOTEM_POP = register("fire_totem_pop", StatFormatter.DEFAULT);
+  public static final Identifier POWDER_SNOW_TOTEM_POP = register("powder_snow_totem_pop", StatFormatter.DEFAULT);
   public static final Identifier CLOSE_CALL = register("close_call", StatFormatter.DEFAULT);
   public static final Identifier VERY_CLOSE_CALL = register("very_close_call", StatFormatter.DEFAULT);
   public static final Identifier BEACON_TIME = register("beacon_time", StatFormatter.TIME);
@@ -52,5 +63,11 @@ public class MoreStats {
     return identifier;
   }
 
-  public static void load() {}
+  private static <T> StatType<T> registerType(String id, Registry<T> registry) {
+    Identifier identifier = new Identifier(MoreStatsMod.MOD_ID, id);
+    return Registry.register(Registry.STAT_TYPE, identifier, new StatType<T>(registry));
+  }
+
+  public static void load() {
+  }
 }
