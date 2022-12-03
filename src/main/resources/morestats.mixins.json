@@ -19,6 +19,7 @@
     "SculkShriekerBlockEntityMixin"
   ],
   "client": [
+    "EntityStatsListWidgetEntryMixin",
     "EntityStatsListWidgetMixin",
     "MinecraftClientMixin"
   ],

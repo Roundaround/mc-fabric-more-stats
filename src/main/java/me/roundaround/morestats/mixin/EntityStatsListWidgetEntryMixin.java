@@ -10,6 +10,7 @@ import me.roundaround.morestats.MoreStats;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.DrawableHelper;
+import net.minecraft.client.gui.widget.AlwaysSelectedEntryListWidget;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.EntityType;
 import net.minecraft.stat.StatHandler;
@@ -29,8 +30,8 @@ public abstract class EntityStatsListWidgetEntryMixin {
   private Text totemsPoppedByText;
   private boolean totemsPoppedByAny = false;
 
-  @Inject(method = "<init>", at = @At(value = "RETURN"))
-  private void onInit(EntityType<?> entityType, CallbackInfo info) {
+  @Inject(method = "<init>(Lnet/minecraft/entity/EntityType;)V", at = @At(value = "RETURN"))
+  private void onInit(AlwaysSelectedEntryListWidget<?> listWidget, EntityType<?> entityType, CallbackInfo info) {
     StatHandler statHandler = CLIENT.player.getStatHandler();
 
     // TODO: Convert texts to translatables

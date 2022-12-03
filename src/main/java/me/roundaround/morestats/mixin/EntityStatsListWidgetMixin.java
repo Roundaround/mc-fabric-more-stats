@@ -4,9 +4,12 @@ import java.util.List;
 
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.ModifyArgs;
 import org.spongepowered.asm.mixin.injection.Redirect;
+import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
 
 import me.roundaround.morestats.MoreStats;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.entity.EntityType;
 import net.minecraft.stat.Stat;
 import net.minecraft.stat.StatHandler;
@@ -24,5 +27,13 @@ public abstract class EntityStatsListWidgetMixin {
         MoreStats.DAMAGED_BY.getOrCreateStat(entityType),
         MoreStats.TOTEMS_POPPED_BY.getOrCreateStat(entityType));
     return allStats.stream().mapToInt(statHandler::getStat).max().orElse(0);
+  }
+
+  @ModifyArgs(method = "<init>", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/widget/AlwaysSelectedEntryListWidget;<init>(Lnet/minecraft/client/MinecraftClient;IIIII)V"))
+  private static void onSuper(Args args) {
+    MinecraftClient client = args.get(0);
+    int currentHeight = args.get(5);
+
+    args.set(5, currentHeight + client.textRenderer.fontHeight * 3);
   }
 }
