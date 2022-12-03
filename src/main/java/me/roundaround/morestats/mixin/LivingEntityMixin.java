@@ -9,6 +9,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import me.roundaround.morestats.MoreStats;
 import me.roundaround.morestats.util.Memory;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -19,6 +20,12 @@ public abstract class LivingEntityMixin {
   public void onTotemPop(DamageSource source, CallbackInfoReturnable<Boolean> info) {
     ServerPlayerEntity player = (ServerPlayerEntity) (Object) this;
     player.incrementStat(MoreStats.TOTEM_POP);
+    
+    Entity attacker = source.getAttacker();
+    if (attacker != null) {
+      player.incrementStat(MoreStats.TOTEMS_POPPED_BY.getOrCreateStat(attacker.getType()));
+      return;
+    }
     
     if (source == DamageSource.FLY_INTO_WALL) {
       player.incrementStat(MoreStats.CRUNCH_TOTEM_POP);

@@ -22,9 +22,9 @@ public abstract class DamageTrackerMixin {
   private LivingEntity entity;
 
   @Inject(method = "onDamage", at = @At(value = "HEAD"))
-  public void onDamage(DamageSource damageSource, float originalHealth, float damage, CallbackInfo info) {
+  public void onDamage(DamageSource source, float originalHealth, float damage, CallbackInfo info) {
     int amount = Math.round(damage * 10f);
-    Entity attacker = damageSource.getAttacker();
+    Entity attacker = source.getAttacker();
 
     if (!(entity instanceof PlayerEntity)) {
       if (attacker instanceof PlayerEntity) {
@@ -38,18 +38,21 @@ public abstract class DamageTrackerMixin {
     float remaining = originalHealth - damage;
     if (originalHealth > 4f && remaining <= 4f && remaining > 1f) {
       player.incrementStat(MoreStats.CLOSE_CALL);
+      return;
     } else if (originalHealth > 1f && remaining <= 1f && remaining > 0f) {
       player.incrementStat(MoreStats.VERY_CLOSE_CALL);
+      return;
     }
 
     if (attacker != null) {
       player.increaseStat(MoreStats.DAMAGED_BY.getOrCreateStat(attacker.getType()), amount);
+      return;
     }
 
-    if (damageSource == DamageSource.FLY_INTO_WALL) {
+    if (source == DamageSource.FLY_INTO_WALL) {
       player.incrementStat(MoreStats.CRUNCH);
       player.increaseStat(MoreStats.CRUNCH_DAMAGE, amount);
-    } else if (damageSource == DamageSource.FALL) {
+    } else if (source == DamageSource.FALL) {
       UUID uuid = player.getUuid();
       if (Memory.LATEST_FALL_FROM_PEARL.contains(uuid)) {
         player.increaseStat(MoreStats.ENDER_PEARL_DAMAGE, amount);
@@ -57,14 +60,14 @@ public abstract class DamageTrackerMixin {
         player.increaseStat(MoreStats.FALL_DAMAGE, amount);
       }
       Memory.LATEST_FALL_FROM_PEARL.remove(uuid);
-    } else if (damageSource == DamageSource.DROWN) {
+    } else if (source == DamageSource.DROWN) {
       player.increaseStat(MoreStats.DROWN_DAMAGE, amount);
-    } else if (damageSource == DamageSource.STARVE) {
+    } else if (source == DamageSource.STARVE) {
       player.increaseStat(MoreStats.STARVE_DAMAGE, amount);
-    } else if (damageSource == DamageSource.IN_FIRE || damageSource == DamageSource.LAVA
-        || damageSource == DamageSource.ON_FIRE) {
+    } else if (source == DamageSource.IN_FIRE || source == DamageSource.LAVA
+        || source == DamageSource.ON_FIRE) {
       player.increaseStat(MoreStats.FIRE_DAMAGE, amount);
-    } else if (damageSource == DamageSource.FREEZE) {
+    } else if (source == DamageSource.FREEZE) {
       player.increaseStat(MoreStats.POWDER_SNOW_DAMAGE, amount);
     }
   }

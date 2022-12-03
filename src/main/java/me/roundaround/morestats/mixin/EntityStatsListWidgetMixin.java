@@ -10,12 +10,13 @@ import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
 
 import me.roundaround.morestats.MoreStats;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gui.screen.StatsScreen;
 import net.minecraft.entity.EntityType;
 import net.minecraft.stat.Stat;
 import net.minecraft.stat.StatHandler;
 import net.minecraft.stat.Stats;
 
-@Mixin(targets = "net/minecraft/client/gui/screen/StatsScreen$EntityStatsListWidget")
+@Mixin(StatsScreen.EntityStatsListWidget.class)
 public abstract class EntityStatsListWidgetMixin {
   @Redirect(method = "<init>", at = @At(value = "INVOKE", target = "Lnet/minecraft/stat/StatHandler;getStat(Lnet/minecraft/stat/Stat;)I", ordinal = 0))
   private int getStat(StatHandler statHandler, Stat<EntityType<?>> stat) {

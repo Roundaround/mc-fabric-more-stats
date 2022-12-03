@@ -10,7 +10,7 @@ import me.roundaround.morestats.MoreStats;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.DrawableHelper;
-import net.minecraft.client.gui.widget.AlwaysSelectedEntryListWidget;
+import net.minecraft.client.gui.screen.StatsScreen;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.EntityType;
 import net.minecraft.stat.StatHandler;
@@ -31,32 +31,45 @@ public abstract class EntityStatsListWidgetEntryMixin {
   private boolean totemsPoppedByAny = false;
 
   @Inject(method = "<init>(Lnet/minecraft/entity/EntityType;)V", at = @At(value = "RETURN"))
-  private void onInit(AlwaysSelectedEntryListWidget<?> listWidget, EntityType<?> entityType, CallbackInfo info) {
+  private void onInit(StatsScreen.EntityStatsListWidget listWidget, EntityType<?> entityType, CallbackInfo info) {
     StatHandler statHandler = CLIENT.player.getStatHandler();
-
-    // TODO: Convert texts to translatables
 
     int damaged = statHandler.getStat(MoreStats.DAMAGED.getOrCreateStat(entityType));
     if (damaged == 0) {
-      damagedText = Text.of("You have never damaged " + entityTypeName.getString());
+      damagedText = Text.translatable(
+          "stat_type.morestats.damaged.none",
+          entityTypeName.getString());
     } else {
-      damagedText = Text.of("You dealt " + damaged + " damage to " + entityTypeName.getString());
+      damagedText = Text.translatable(
+          "stat_type.morestats.damaged",
+          damaged,
+          entityTypeName.getString());
       damagedAny = true;
     }
 
     int damagedBy = statHandler.getStat(MoreStats.DAMAGED_BY.getOrCreateStat(entityType));
     if (damagedBy == 0) {
-      damagedByText = Text.of("You have never been damaged by " + entityTypeName.getString());
+      damagedByText = Text.translatable(
+          "stat_type.morestats.damaged_by.none",
+          entityTypeName.getString());
     } else {
-      damagedByText = Text.of(entityTypeName.getString() + " dealt " + damagedBy + " damage to you");
+      damagedByText = Text.translatable(
+          "stat_type.morestats.damaged_by",
+          entityTypeName.getString(),
+          damagedBy);
       damagedByAny = true;
     }
 
     int totemsPoppedBy = statHandler.getStat(MoreStats.TOTEMS_POPPED_BY.getOrCreateStat(entityType));
     if (totemsPoppedBy == 0) {
-      totemsPoppedByText = Text.of(entityTypeName.getString() + " has never popped one of your totems");
+      totemsPoppedByText = Text.translatable(
+          "stat_type.morestats.totems_popped_by.none",
+          entityTypeName.getString());
     } else {
-      totemsPoppedByText = Text.of(entityTypeName.getString() + " popped " + totemsPoppedBy + " of your totems");
+      totemsPoppedByText = Text.translatable(
+          "stat_type.morestats.totems_popped_by",
+          entityTypeName.getString(),
+          totemsPoppedBy);
       totemsPoppedByAny = true;
     }
   }
