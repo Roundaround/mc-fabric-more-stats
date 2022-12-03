@@ -17,6 +17,7 @@ public class MoreStats {
 
   public static final StatType<EntityType<?>> DAMAGED = registerType("damaged", Registry.ENTITY_TYPE);
   public static final StatType<EntityType<?>> DAMAGED_BY = registerType("damaged_by", Registry.ENTITY_TYPE);
+  public static final StatType<EntityType<?>> TOTEMS_POPPED_BY = registerType("totem_popped_by", Registry.ENTITY_TYPE);
   public static final Identifier PLAYED_HOURS = register("play_hours", TICKS_TO_HOURS);
   public static final Identifier CRUNCH = register("crunch", StatFormatter.DEFAULT);
   public static final Identifier SHREIKER_TRIGGER = register("shreiker_trigger", StatFormatter.DEFAULT);
