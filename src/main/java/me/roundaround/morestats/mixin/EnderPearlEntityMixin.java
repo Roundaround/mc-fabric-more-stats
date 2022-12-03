@@ -62,10 +62,8 @@ public abstract class EnderPearlEntityMixin {
     }
 
     ServerPlayerEntity player = (ServerPlayerEntity) self.getOwner();
-    float damage = args.get(1);
     
-    int amount = Math.round(damage * 10f);
-    player.increaseStat(MoreStats.ENDER_PEARL_DAMAGE, amount);
     Memory.LATEST_FALL_FROM_PEARL.add(player.getUuid());
+    Memory.LATEST_TOTEM_FROM_PEARL.add(player.getUuid());
   }
 }

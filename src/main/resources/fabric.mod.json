@@ -26,6 +26,7 @@
   "mixins": [
     "morestats.mixins.json"
   ],
+  "accessWidener": "morestats.accesswidener",
   "depends": {
     "fabricloader": ">=0.13.3",
     "fabric": "*",
