@@ -13,6 +13,7 @@ import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.gui.screen.StatsScreen;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.EntityType;
+import net.minecraft.stat.StatFormatter;
 import net.minecraft.stat.StatHandler;
 import net.minecraft.text.Text;
 
@@ -30,7 +31,7 @@ public abstract class EntityStatsListWidgetEntryMixin {
   private Text totemsPoppedByText;
   private boolean totemsPoppedByAny = false;
 
-  @Inject(method = "<init>(Lnet/minecraft/entity/EntityType;)V", at = @At(value = "RETURN"))
+  @Inject(method = "<init>(Lnet/minecraft/client/gui/screen/StatsScreen$EntityStatsListWidget;Lnet/minecraft/entity/EntityType;)V", at = @At(value = "RETURN"))
   private void onInit(StatsScreen.EntityStatsListWidget listWidget, EntityType<?> entityType, CallbackInfo info) {
     StatHandler statHandler = CLIENT.player.getStatHandler();
 
@@ -42,7 +43,7 @@ public abstract class EntityStatsListWidgetEntryMixin {
     } else {
       damagedText = Text.translatable(
           "stat_type.morestats.damaged",
-          damaged,
+          StatFormatter.DIVIDE_BY_TEN.format(damaged),
           entityTypeName.getString());
       damagedAny = true;
     }
@@ -56,7 +57,7 @@ public abstract class EntityStatsListWidgetEntryMixin {
       damagedByText = Text.translatable(
           "stat_type.morestats.damaged_by",
           entityTypeName.getString(),
-          damagedBy);
+          StatFormatter.DIVIDE_BY_TEN.format(damagedBy));
       damagedByAny = true;
     }
 
