@@ -5,9 +5,7 @@ import java.util.Optional;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.ModifyArgs;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
 
 import me.roundaround.morestats.MoreStats;
 import me.roundaround.morestats.util.Memory;
@@ -29,40 +27,29 @@ public abstract class EnderPearlEntityMixin {
     }
 
     ServerPlayerEntity player = (ServerPlayerEntity) self.getOwner();
-    position = Optional.of(player.getPos());
+    this.position = Optional.of(player.getPos());
   }
 
-  @Inject(method = "onCollision", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/Entity;damage(Lnet/minecraft/entity/damage/DamageSource;F)Z"))
+  @Inject(method = "onCollision", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/Entity;damage(Lnet/minecraft/entity/damage/DamageSource;F)Z", shift = At.Shift.BEFORE))
   public void onCollisionAfterTeleport(HitResult hitResult, CallbackInfo info) {
     EnderPearlEntity self = (EnderPearlEntity) (Object) this;
 
-    if (!(self.getOwner() instanceof ServerPlayerEntity) || position.isEmpty()) {
+    if (!(self.getOwner() instanceof ServerPlayerEntity) || this.position.isEmpty()) {
       return;
     }
 
     ServerPlayerEntity player = (ServerPlayerEntity) self.getOwner();
-    double dx = player.getX() - position.get().getX();
-    double dy = player.getY() - position.get().getY();
-    double dz = player.getZ() - position.get().getZ();
+    double dx = player.getX() - this.position.get().getX();
+    double dy = player.getY() - this.position.get().getY();
+    double dz = player.getZ() - this.position.get().getZ();
 
     int distance = Math.round((float) Math.sqrt(dx * dx + dy * dy + dz * dz) * 100f);
     if (distance > 0) {
       player.increaseStat(MoreStats.ENDER_PEARL_ONE_CM, distance);
     }
 
-    position = Optional.empty();
-  }
+    this.position = Optional.empty();
 
-  @ModifyArgs(method = "onCollision", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/Entity;damage(Lnet/minecraft/entity/damage/DamageSource;F)Z"))
-  public void onDamage(Args args) {
-    EnderPearlEntity self = (EnderPearlEntity) (Object) this;
-
-    if (!(self.getOwner() instanceof ServerPlayerEntity)) {
-      return;
-    }
-
-    ServerPlayerEntity player = (ServerPlayerEntity) self.getOwner();
-    
     Memory.LATEST_FALL_FROM_PEARL.add(player.getUuid());
     Memory.LATEST_TOTEM_FROM_PEARL.add(player.getUuid());
   }

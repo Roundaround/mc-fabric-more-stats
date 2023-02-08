@@ -17,7 +17,7 @@ import net.minecraft.screen.ForgingScreenHandler;
 public abstract class ForgingScreenHandlerMixin {
   Optional<ItemStack> input = Optional.empty();
 
-  @Inject(method = "transferSlot", at = @At(value = "HEAD"))
+  @Inject(method = "quickMove", at = @At(value = "HEAD"))
   public void beforeTakeItem(PlayerEntity player, int index, CallbackInfoReturnable<ItemStack> info) {
     ForgingScreenHandler self = (ForgingScreenHandler) (Object) this;
     if (!(self instanceof AnvilScreenHandler) || index != 2) {
@@ -27,7 +27,7 @@ public abstract class ForgingScreenHandlerMixin {
     input = Optional.of(self.getSlot(0).getStack().copy());
   }
 
-  @Inject(method = "transferSlot", at = @At(value = "RETURN"))
+  @Inject(method = "quickMove", at = @At(value = "RETURN"))
   public void onTakeItem(PlayerEntity player, int index, CallbackInfoReturnable<ItemStack> info) {
     ForgingScreenHandler self = (ForgingScreenHandler) (Object) this;
     if (!(self instanceof AnvilScreenHandler) || index != 2) {

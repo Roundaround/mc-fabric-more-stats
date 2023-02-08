@@ -11,7 +11,7 @@ import net.minecraft.entity.player.PlayerEntity;
 
 @Mixin(Entity.class)
 public abstract class EntityMixin {
-  @Inject(method = "tickNetherPortal", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/Entity;moveToWorld(Lnet/minecraft/server/world/ServerWorld;)Lnet/minecraft/entity/Entity;"))
+  @Inject(method = "tickPortal", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/Entity;moveToWorld(Lnet/minecraft/server/world/ServerWorld;)Lnet/minecraft/entity/Entity;"))
   public void onMoveToWorld(CallbackInfo info) {
     Entity self = (Entity) (Object) this;
     if (!(self instanceof PlayerEntity)) {

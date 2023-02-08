@@ -15,7 +15,7 @@ import net.minecraft.world.World;
 
 @Mixin(EndGatewayBlockEntity.class)
 public abstract class EndGatewayBlockEntityMixin {
-  @Inject(method = "tryTeleportingEntity", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/Entity;resetNetherPortalCooldown()V"))
+  @Inject(method = "tryTeleportingEntity", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/Entity;resetPortalCooldown()V"))
   private static void onTeleport(World world, BlockPos pos, BlockState state, Entity entity, EndGatewayBlockEntity blockEntity, CallbackInfo info) {
     if (!(entity instanceof PlayerEntity)) {
       return;

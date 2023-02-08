@@ -13,7 +13,7 @@ import net.minecraft.item.ItemStack;
 
 @Mixin(PlayerEntity.class)
 public abstract class PlayerEntityMixin {
-  @Inject(method = "tick", at = @At(value = "INVOKE", target = "Lnet/minecraft/block/entity/SculkShriekerWarningManager;tick()V"))
+  @Inject(method = "tick", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/player/HungerManager;update(Lnet/minecraft/entity/player/PlayerEntity;)V"))
   public void tick(CallbackInfo info) {
     PlayerEntity self = (PlayerEntity) (Object) this;
 

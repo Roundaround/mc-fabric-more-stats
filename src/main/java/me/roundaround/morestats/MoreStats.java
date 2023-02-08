@@ -3,11 +3,12 @@ package me.roundaround.morestats;
 import java.util.Locale;
 
 import net.minecraft.entity.EntityType;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.Registry;
 import net.minecraft.stat.StatFormatter;
 import net.minecraft.stat.StatType;
 import net.minecraft.stat.Stats;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
 
 public class MoreStats {
   private static final StatFormatter TICKS_TO_HOURS = (ticks) -> {
@@ -15,9 +16,10 @@ public class MoreStats {
     return String.format(Locale.ROOT, "%.3f", hours);
   };
 
-  public static final StatType<EntityType<?>> DAMAGED = registerType("damaged", Registry.ENTITY_TYPE);
-  public static final StatType<EntityType<?>> DAMAGED_BY = registerType("damaged_by", Registry.ENTITY_TYPE);
-  public static final StatType<EntityType<?>> TOTEMS_POPPED_BY = registerType("totem_popped_by", Registry.ENTITY_TYPE);
+  public static final StatType<EntityType<?>> DAMAGED = registerType("damaged", Registries.ENTITY_TYPE);
+  public static final StatType<EntityType<?>> DAMAGED_BY = registerType("damaged_by", Registries.ENTITY_TYPE);
+  public static final StatType<EntityType<?>> TOTEMS_POPPED_BY = registerType("totem_popped_by",
+      Registries.ENTITY_TYPE);
   public static final Identifier PLAYED_HOURS = register("play_hours", TICKS_TO_HOURS);
   public static final Identifier CRUNCH = register("crunch", StatFormatter.DEFAULT);
   public static final Identifier SHREIKER_TRIGGER = register("shreiker_trigger", StatFormatter.DEFAULT);
@@ -59,14 +61,14 @@ public class MoreStats {
 
   private static Identifier register(String id, StatFormatter formatter) {
     Identifier identifier = new Identifier(MoreStatsMod.MOD_ID, id);
-    Registry.register(Registry.CUSTOM_STAT, id, identifier);
+    Registry.register(Registries.CUSTOM_STAT, id, identifier);
     Stats.CUSTOM.getOrCreateStat(identifier, formatter);
     return identifier;
   }
 
   private static <T> StatType<T> registerType(String id, Registry<T> registry) {
     Identifier identifier = new Identifier(MoreStatsMod.MOD_ID, id);
-    return Registry.register(Registry.STAT_TYPE, identifier, new StatType<T>(registry));
+    return Registry.register(Registries.STAT_TYPE, identifier, new StatType<T>(registry));
   }
 
   public static void load() {
