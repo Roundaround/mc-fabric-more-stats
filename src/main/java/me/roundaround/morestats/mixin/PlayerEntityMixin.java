@@ -23,6 +23,18 @@ public abstract class PlayerEntityMixin {
       self.incrementStat(MoreStats.FIRE_TIME);
     }
 
+    if (self.isFrozen()) {
+      self.incrementStat(MoreStats.FROZEN_TIME);
+    }
+
+    if (self.isUsingSpyglass()) {
+      self.incrementStat(MoreStats.SPYGLASS_TIME);
+    }
+
+    if (self.isGlowing()) {
+      self.incrementStat(MoreStats.GLOWING_TIME);
+    }
+
     if (!self.canBreatheInWater()
         && !StatusEffectUtil.hasWaterBreathing(self)
         && !self.getAbilities().invulnerable
