@@ -22,21 +22,20 @@ public abstract class DamageTrackerMixin {
   private LivingEntity entity;
 
   @Inject(method = "onDamage", at = @At(value = "HEAD"))
-  public void onDamage(DamageSource source, float originalHealth, float damage, CallbackInfo info) {
+  public void onDamage(DamageSource source, float damage, CallbackInfo info) {
     int amount = Math.round(damage * 10f);
     Entity attacker = source.getAttacker();
 
-    if (!(entity instanceof PlayerEntity)) {
-      if (attacker instanceof PlayerEntity) {
-        ((PlayerEntity) attacker).increaseStat(MoreStats.DAMAGED.getOrCreateStat(entity.getType()),
-            amount);
+    if (!(entity instanceof PlayerEntity player)) {
+      if (attacker instanceof PlayerEntity attackerPlayer) {
+        attackerPlayer.increaseStat(MoreStats.DAMAGED.getOrCreateStat(entity.getType()), amount);
       }
       return;
     }
 
-    PlayerEntity player = (PlayerEntity) entity;
+    float remaining = player.getHealth();
+    float originalHealth = remaining + damage;
 
-    float remaining = originalHealth - damage;
     if (originalHealth > 4f && remaining <= 4f && remaining > 1f) {
       player.incrementStat(MoreStats.CLOSE_CALL);
       return;

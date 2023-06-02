@@ -1,21 +1,19 @@
 package me.roundaround.morestats.mixin;
 
+import me.roundaround.morestats.MoreStats;
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.font.TextRenderer;
+import net.minecraft.client.gui.DrawContext;
+import net.minecraft.client.gui.screen.StatsScreen;
+import net.minecraft.entity.EntityType;
+import net.minecraft.stat.StatFormatter;
+import net.minecraft.stat.StatHandler;
+import net.minecraft.text.Text;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-
-import me.roundaround.morestats.MoreStats;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.font.TextRenderer;
-import net.minecraft.client.gui.DrawableHelper;
-import net.minecraft.client.gui.screen.StatsScreen;
-import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.entity.EntityType;
-import net.minecraft.stat.StatFormatter;
-import net.minecraft.stat.StatHandler;
-import net.minecraft.text.Text;
 
 @Mixin(targets = "net.minecraft.client.gui.screen.StatsScreen$EntityStatsListWidget$Entry")
 public abstract class EntityStatsListWidgetEntryMixin {
@@ -31,18 +29,20 @@ public abstract class EntityStatsListWidgetEntryMixin {
   private Text totemsPoppedByText;
   private boolean totemsPoppedByAny = false;
 
-  @Inject(method = "<init>(Lnet/minecraft/client/gui/screen/StatsScreen$EntityStatsListWidget;Lnet/minecraft/entity/EntityType;)V", at = @At(value = "RETURN"))
-  private void onInit(StatsScreen.EntityStatsListWidget listWidget, EntityType<?> entityType, CallbackInfo info) {
+  @Inject(
+      method = "<init>(Lnet/minecraft/client/gui/screen/StatsScreen$EntityStatsListWidget;Lnet/minecraft/entity/EntityType;)V",
+      at = @At(value = "RETURN")
+  )
+  private void onInit(
+      StatsScreen.EntityStatsListWidget listWidget, EntityType<?> entityType, CallbackInfo info) {
     StatHandler statHandler = CLIENT.player.getStatHandler();
 
     int damaged = statHandler.getStat(MoreStats.DAMAGED.getOrCreateStat(entityType));
     if (damaged == 0) {
-      damagedText = Text.translatable(
-          "stat_type.morestats.damaged.none",
-          entityTypeName.getString());
+      damagedText =
+          Text.translatable("stat_type.morestats.damaged.none", entityTypeName.getString());
     } else {
-      damagedText = Text.translatable(
-          "stat_type.morestats.damaged",
+      damagedText = Text.translatable("stat_type.morestats.damaged",
           StatFormatter.DIVIDE_BY_TEN.format(damaged),
           entityTypeName.getString());
       damagedAny = true;
@@ -50,25 +50,22 @@ public abstract class EntityStatsListWidgetEntryMixin {
 
     int damagedBy = statHandler.getStat(MoreStats.DAMAGED_BY.getOrCreateStat(entityType));
     if (damagedBy == 0) {
-      damagedByText = Text.translatable(
-          "stat_type.morestats.damaged_by.none",
-          entityTypeName.getString());
+      damagedByText =
+          Text.translatable("stat_type.morestats.damaged_by.none", entityTypeName.getString());
     } else {
-      damagedByText = Text.translatable(
-          "stat_type.morestats.damaged_by",
+      damagedByText = Text.translatable("stat_type.morestats.damaged_by",
           entityTypeName.getString(),
           StatFormatter.DIVIDE_BY_TEN.format(damagedBy));
       damagedByAny = true;
     }
 
-    int totemsPoppedBy = statHandler.getStat(MoreStats.TOTEMS_POPPED_BY.getOrCreateStat(entityType));
+    int totemsPoppedBy =
+        statHandler.getStat(MoreStats.TOTEMS_POPPED_BY.getOrCreateStat(entityType));
     if (totemsPoppedBy == 0) {
-      totemsPoppedByText = Text.translatable(
-          "stat_type.morestats.totems_popped_by.none",
+      totemsPoppedByText = Text.translatable("stat_type.morestats.totems_popped_by.none",
           entityTypeName.getString());
     } else {
-      totemsPoppedByText = Text.translatable(
-          "stat_type.morestats.totems_popped_by",
+      totemsPoppedByText = Text.translatable("stat_type.morestats.totems_popped_by",
           entityTypeName.getString(),
           totemsPoppedBy);
       totemsPoppedByAny = true;
@@ -77,7 +74,7 @@ public abstract class EntityStatsListWidgetEntryMixin {
 
   @Inject(method = "render", at = @At(value = "RETURN"))
   private void onRender(
-      MatrixStack matrices,
+      DrawContext drawContext,
       int index,
       int y,
       int x,
@@ -90,17 +87,20 @@ public abstract class EntityStatsListWidgetEntryMixin {
       CallbackInfo info) {
     TextRenderer textRenderer = CLIENT.textRenderer;
 
-    DrawableHelper.drawTextWithShadow(matrices,
-        textRenderer,
-        damagedText, x + 2 + 10,
-        y + 1 + textRenderer.fontHeight * 3, damagedAny ? 0x909090 : 0x606060);
-    DrawableHelper.drawTextWithShadow(matrices,
-        textRenderer,
-        damagedByText, x + 2 + 10,
-        y + 1 + textRenderer.fontHeight * 4, damagedByAny ? 0x909090 : 0x606060);
-    DrawableHelper.drawTextWithShadow(matrices,
-        textRenderer,
-        totemsPoppedByText, x + 2 + 10,
-        y + 1 + textRenderer.fontHeight * 5, totemsPoppedByAny ? 0x909090 : 0x606060);
+    drawContext.drawTextWithShadow(textRenderer,
+        damagedText,
+        x + 2 + 10,
+        y + 1 + textRenderer.fontHeight * 3,
+        damagedAny ? 0x909090 : 0x606060);
+    drawContext.drawTextWithShadow(textRenderer,
+        damagedByText,
+        x + 2 + 10,
+        y + 1 + textRenderer.fontHeight * 4,
+        damagedByAny ? 0x909090 : 0x606060);
+    drawContext.drawTextWithShadow(textRenderer,
+        totemsPoppedByText,
+        x + 2 + 10,
+        y + 1 + textRenderer.fontHeight * 5,
+        totemsPoppedByAny ? 0x909090 : 0x606060);
   }
 }
