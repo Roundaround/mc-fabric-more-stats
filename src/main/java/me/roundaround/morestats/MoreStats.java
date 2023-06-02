@@ -36,11 +36,14 @@ public class MoreStats {
   public static final Identifier VERY_CLOSE_CALL = register("very_close_call", StatFormatter.DEFAULT);
   public static final Identifier BEACON_TIME = register("beacon_time", StatFormatter.TIME);
   public static final Identifier FIRE_TIME = register("fire_time", StatFormatter.TIME);
+  public static final Identifier FROZEN_TIME = register("frozen_time", StatFormatter.TIME);
+  public static final Identifier GLOWING_TIME = register("glowing_time", StatFormatter.TIME);
   public static final Identifier DROWN_TIME = register("drown_time", StatFormatter.TIME);
   public static final Identifier HUNGRY_TIME = register("hungry_time", StatFormatter.TIME);
   public static final Identifier STARVE_TIME = register("starve_time", StatFormatter.TIME);
   public static final Identifier PAUSE_TIME = register("pause_time", StatFormatter.TIME);
   public static final Identifier POWDER_SNOW_TIME = register("powder_snow_time", StatFormatter.TIME);
+  public static final Identifier SPYGLASS_TIME = register("spyglass_time", StatFormatter.TIME);
   public static final Identifier FIRE_DAMAGE = register("fire_damage", StatFormatter.DIVIDE_BY_TEN);
   public static final Identifier FALL_DAMAGE = register("fall_damage", StatFormatter.DIVIDE_BY_TEN);
   public static final Identifier CRUNCH_DAMAGE = register("crunch_damage", StatFormatter.DIVIDE_BY_TEN);
