@@ -3,12 +3,12 @@
   "id": "morestats",
   "version": "${version}",
   "name": "More Stats",
-  "description": "Track more stats in your Minecraft worlds.",
+  "description": "Track more stats in your Minecraft worlds.\n${library}",
   "authors": [
     "Roundaround"
   ],
   "contact": {
-    "homepage": "https://modrinth.com/mod/roundaround-more-stats",
+    "homepage": "https://modrinth.com/mod/more-stats",
     "sources": "https://github.com/Roundaround/mc-fabric-more-stats",
     "issues": "https://github.com/Roundaround/mc-fabric-more-stats/issues"
   },
@@ -29,7 +29,7 @@
   "accessWidener": "morestats.accesswidener",
   "depends": {
     "fabricloader": ">=0.13.3",
-    "fabric": "*",
+    "fabric-api": "*",
     "minecraft": "1.19.x",
     "java": ">=17"
   }
