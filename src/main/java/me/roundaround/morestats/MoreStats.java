@@ -8,6 +8,8 @@ import net.minecraft.registry.Registry;
 import net.minecraft.stat.StatFormatter;
 import net.minecraft.stat.StatType;
 import net.minecraft.stat.Stats;
+import net.minecraft.text.MutableText;
+import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 
 public class MoreStats {
@@ -71,7 +73,8 @@ public class MoreStats {
 
   private static <T> StatType<T> registerType(String id, Registry<T> registry) {
     Identifier identifier = new Identifier(MoreStatsMod.MOD_ID, id);
-    return Registry.register(Registries.STAT_TYPE, identifier, new StatType<T>(registry));
+    MutableText text = Text.translatable("stat_type." + MoreStatsMod.MOD_ID + "." + id);
+    return Registry.register(Registries.STAT_TYPE, identifier, new StatType<T>(registry, text));
   }
 
   public static void load() {
