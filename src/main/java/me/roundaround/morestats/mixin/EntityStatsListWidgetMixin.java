@@ -30,11 +30,11 @@ public abstract class EntityStatsListWidgetMixin {
     return allStats.stream().mapToInt(statHandler::getStat).max().orElse(0);
   }
 
-  @ModifyArgs(method = "<init>", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/widget/AlwaysSelectedEntryListWidget;<init>(Lnet/minecraft/client/MinecraftClient;IIIII)V"))
+  @ModifyArgs(method = "<init>", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/widget/AlwaysSelectedEntryListWidget;<init>(Lnet/minecraft/client/MinecraftClient;IIII)V"))
   private static void onSuper(Args args) {
     MinecraftClient client = args.get(0);
-    int currentHeight = args.get(5);
+    int currentHeight = args.get(4);
 
-    args.set(5, currentHeight + client.textRenderer.fontHeight * 3);
+    args.set(4, currentHeight + client.textRenderer.fontHeight * 3);
   }
 }
