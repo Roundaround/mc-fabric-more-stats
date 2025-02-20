@@ -18,7 +18,7 @@ import java.util.UUID;
 @Mixin(LivingEntity.class)
 public abstract class LivingEntityMixin {
   @Inject(
-      method = "tryUseTotem", at = @At(
+      method = "tryUseDeathProtector", at = @At(
       value = "INVOKE",
       target = "Lnet/minecraft/advancement/criterion/UsedTotemCriterion;trigger" +
                "(Lnet/minecraft/server/network/ServerPlayerEntity;Lnet/minecraft/item/ItemStack;)V"

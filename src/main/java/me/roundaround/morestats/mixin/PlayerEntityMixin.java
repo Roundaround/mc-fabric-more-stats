@@ -1,19 +1,24 @@
 package me.roundaround.morestats.mixin;
 
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-
 import me.roundaround.morestats.MoreStats;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffectUtil;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(PlayerEntity.class)
 public abstract class PlayerEntityMixin {
-  @Inject(method = "tick", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/player/HungerManager;update(Lnet/minecraft/entity/player/PlayerEntity;)V"))
+  @Inject(
+      method = "tick", at = @At(
+      value = "INVOKE",
+      target = "Lnet/minecraft/entity/player/HungerManager;update" +
+               "(Lnet/minecraft/server/network/ServerPlayerEntity;)V"
+  )
+  )
   public void tick(CallbackInfo info) {
     PlayerEntity self = (PlayerEntity) (Object) this;
 
@@ -35,10 +40,8 @@ public abstract class PlayerEntityMixin {
       self.incrementStat(MoreStats.GLOWING_TIME);
     }
 
-    if (!self.canBreatheInWater()
-        && !StatusEffectUtil.hasWaterBreathing(self)
-        && !self.getAbilities().invulnerable
-        && self.getAir() <= 0) {
+    if (!self.canBreatheInWater() && !StatusEffectUtil.hasWaterBreathing(self) && !self.getAbilities().invulnerable &&
+        self.getAir() <= 0) {
       self.incrementStat(MoreStats.DROWN_TIME);
     }
 
