@@ -12,7 +12,7 @@ public final class Networking {
   private Networking() {
   }
 
-  public static final Identifier TOGGLE_PERSPECTIVE_C2S = new Identifier(MoreStatsMod.MOD_ID, "toggle_perspective_c2s");
+  public static final Identifier TOGGLE_PERSPECTIVE_C2S = Identifier.of(MoreStatsMod.MOD_ID, "toggle_perspective_c2s");
 
   public static void registerC2SPayloads() {
     PayloadTypeRegistry.playC2S().register(TogglePerspectiveC2S.ID, TogglePerspectiveC2S.CODEC);

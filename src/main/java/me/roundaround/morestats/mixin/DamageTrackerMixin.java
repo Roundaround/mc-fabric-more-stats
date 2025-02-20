@@ -8,6 +8,7 @@ import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.damage.DamageSources;
 import net.minecraft.entity.damage.DamageTracker;
 import net.minecraft.entity.player.PlayerEntity;
+import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -19,6 +20,7 @@ import java.util.UUID;
 @Mixin(DamageTracker.class)
 public abstract class DamageTrackerMixin {
   @Shadow
+  @Final
   private LivingEntity entity;
 
   @Inject(method = "onDamage", at = @At(value = "HEAD"))
@@ -66,8 +68,8 @@ public abstract class DamageTrackerMixin {
       player.increaseStat(MoreStats.DROWN_DAMAGE, amount);
     } else if (source == damageSources.starve()) {
       player.increaseStat(MoreStats.STARVE_DAMAGE, amount);
-    } else if (source == damageSources.inFire() || source == damageSources.lava() ||
-        source == damageSources.onFire() || source == damageSources.hotFloor()) {
+    } else if (source == damageSources.inFire() || source == damageSources.lava() || source == damageSources.onFire() ||
+               source == damageSources.hotFloor()) {
       player.increaseStat(MoreStats.FIRE_DAMAGE, amount);
     } else if (source == damageSources.freeze()) {
       player.increaseStat(MoreStats.POWDER_SNOW_DAMAGE, amount);

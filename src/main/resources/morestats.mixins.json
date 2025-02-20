@@ -2,20 +2,18 @@
   "required": true,
   "minVersion": "0.8",
   "package": "me.roundaround.morestats.mixin",
-  "compatibilityLevel": "JAVA_17",
   "mixins": [
     "AnvilScreenHandlerMixin",
     "DamageTrackerMixin",
     "EnderPearlEntityMixin",
-    "EndGatewayBlockEntityMixin",
     "EndPortalBlockMixin",
     "EntityMixin",
-    "ExperienceOrbEntityAccessor",
     "ExperienceOrbEntityMixin",
     "ForgingScreenHandlerMixin",
     "IntegratedServerMixin",
     "LivingEntityMixin",
     "PlayerEntityMixin",
+    "PortalManagerAccessor",
     "SculkShriekerBlockEntityMixin"
   ],
   "client": [

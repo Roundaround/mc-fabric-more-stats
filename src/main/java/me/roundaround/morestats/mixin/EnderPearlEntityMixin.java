@@ -1,44 +1,52 @@
 package me.roundaround.morestats.mixin;
 
-import java.util.Optional;
-
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-
 import me.roundaround.morestats.MoreStats;
 import me.roundaround.morestats.util.Memory;
 import net.minecraft.entity.projectile.thrown.EnderPearlEntity;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.Vec3d;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+
+import java.util.Optional;
 
 @Mixin(EnderPearlEntity.class)
 public abstract class EnderPearlEntityMixin {
+  @Unique
   Optional<Vec3d> position = Optional.empty();
 
-  @Inject(method = "onCollision", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/projectile/thrown/EnderPearlEntity;getOwner()Lnet/minecraft/entity/Entity;"))
+  @Inject(
+      method = "onCollision", at = @At(
+      value = "INVOKE",
+      target = "Lnet/minecraft/entity/projectile/thrown/EnderPearlEntity;getOwner()Lnet/minecraft/entity/Entity;"
+  )
+  )
   public void onCollisionBeforeTeleport(HitResult hitResult, CallbackInfo info) {
     EnderPearlEntity self = (EnderPearlEntity) (Object) this;
 
-    if (!(self.getOwner() instanceof ServerPlayerEntity)) {
+    if (!(self.getOwner() instanceof ServerPlayerEntity player)) {
       return;
     }
 
-    ServerPlayerEntity player = (ServerPlayerEntity) self.getOwner();
     this.position = Optional.of(player.getPos());
   }
 
-  @Inject(method = "onCollision", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/Entity;damage(Lnet/minecraft/entity/damage/DamageSource;F)Z", shift = At.Shift.BEFORE))
+  @Inject(
+      method = "onCollision", at = @At(
+      value = "INVOKE", target = "Lnet/minecraft/server/network/ServerPlayerEntity;clearCurrentExplosion()V"
+  )
+  )
   public void onCollisionAfterTeleport(HitResult hitResult, CallbackInfo info) {
     EnderPearlEntity self = (EnderPearlEntity) (Object) this;
 
-    if (!(self.getOwner() instanceof ServerPlayerEntity) || this.position.isEmpty()) {
+    if (!(self.getOwner() instanceof ServerPlayerEntity player) || this.position.isEmpty()) {
       return;
     }
 
-    ServerPlayerEntity player = (ServerPlayerEntity) self.getOwner();
     double dx = player.getX() - this.position.get().getX();
     double dy = player.getY() - this.position.get().getY();
     double dz = player.getZ() - this.position.get().getZ();

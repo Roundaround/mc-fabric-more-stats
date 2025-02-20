@@ -45,5 +45,6 @@
   "stat.morestats.toggle_perspective": "Camera Changes",
   "stat.morestats.nether_portal": "Teleports by Nether Portal",
   "stat.morestats.end_portal": "Teleports by End Portal",
-  "stat.morestats.end_gateway": "Teleports by End Gateway"
+  "stat.morestats.end_gateway": "Teleports by End Gateway",
+  "stat.morestats.other_portals": "Teleports by Other (Unknown) Portals"
 }

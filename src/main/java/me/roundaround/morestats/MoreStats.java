@@ -1,7 +1,5 @@
 package me.roundaround.morestats;
 
-import java.util.Locale;
-
 import net.minecraft.entity.EntityType;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
@@ -12,6 +10,8 @@ import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 
+import java.util.Locale;
+
 public class MoreStats {
   private static final StatFormatter TICKS_TO_HOURS = (ticks) -> {
     double hours = ticks / 20.0 / 60.0 / 60.0;
@@ -21,7 +21,8 @@ public class MoreStats {
   public static final StatType<EntityType<?>> DAMAGED = registerType("damaged", Registries.ENTITY_TYPE);
   public static final StatType<EntityType<?>> DAMAGED_BY = registerType("damaged_by", Registries.ENTITY_TYPE);
   public static final StatType<EntityType<?>> TOTEMS_POPPED_BY = registerType("totem_popped_by",
-      Registries.ENTITY_TYPE);
+      Registries.ENTITY_TYPE
+  );
   public static final Identifier PLAYED_HOURS = register("play_hours", TICKS_TO_HOURS);
   public static final Identifier CRUNCH = register("crunch", StatFormatter.DEFAULT);
   public static final Identifier SHREIKER_TRIGGER = register("shreiker_trigger", StatFormatter.DEFAULT);
@@ -63,16 +64,17 @@ public class MoreStats {
   public static final Identifier NETHER_PORTAL = register("nether_portal", StatFormatter.DEFAULT);
   public static final Identifier END_PORTAL = register("end_portal", StatFormatter.DEFAULT);
   public static final Identifier END_GATEWAY = register("end_gateway", StatFormatter.DEFAULT);
+  public static final Identifier OTHER_PORTALS = register("other_portals", StatFormatter.DEFAULT);
 
   private static Identifier register(String id, StatFormatter formatter) {
-    Identifier identifier = new Identifier(MoreStatsMod.MOD_ID, id);
+    Identifier identifier = Identifier.of(MoreStatsMod.MOD_ID, id);
     Registry.register(Registries.CUSTOM_STAT, id, identifier);
     Stats.CUSTOM.getOrCreateStat(identifier, formatter);
     return identifier;
   }
 
   private static <T> StatType<T> registerType(String id, Registry<T> registry) {
-    Identifier identifier = new Identifier(MoreStatsMod.MOD_ID, id);
+    Identifier identifier = Identifier.of(MoreStatsMod.MOD_ID, id);
     MutableText text = Text.translatable("stat_type." + MoreStatsMod.MOD_ID + "." + id);
     return Registry.register(Registries.STAT_TYPE, identifier, new StatType<T>(registry, text));
   }

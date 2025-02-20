@@ -8,6 +8,7 @@ import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.damage.DamageSources;
 import net.minecraft.server.network.ServerPlayerEntity;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
@@ -19,11 +20,15 @@ public abstract class LivingEntityMixin {
   @Inject(
       method = "tryUseTotem", at = @At(
       value = "INVOKE",
-      target = "Lnet/minecraft/advancement/criterion/UsedTotemCriterion;trigger(Lnet/minecraft/server/network/ServerPlayerEntity;Lnet/minecraft/item/ItemStack;)V"
+      target = "Lnet/minecraft/advancement/criterion/UsedTotemCriterion;trigger" +
+               "(Lnet/minecraft/server/network/ServerPlayerEntity;Lnet/minecraft/item/ItemStack;)V"
   )
   )
   public void onTotemPop(DamageSource source, CallbackInfoReturnable<Boolean> info) {
-    ServerPlayerEntity player = (ServerPlayerEntity) (Object) this;
+    if (!(this.self() instanceof ServerPlayerEntity player)) {
+      return;
+    }
+
     player.incrementStat(MoreStats.TOTEM_POP);
 
     Entity attacker = source.getAttacker();
@@ -48,11 +53,16 @@ public abstract class LivingEntityMixin {
       player.incrementStat(MoreStats.DROWN_TOTEM_POP);
     } else if (source == damageSources.starve()) {
       player.incrementStat(MoreStats.STARVE_TOTEM_POP);
-    } else if (source == damageSources.inFire() || source == damageSources.lava() ||
-        source == damageSources.onFire() || source == damageSources.hotFloor()) {
+    } else if (source == damageSources.inFire() || source == damageSources.lava() || source == damageSources.onFire() ||
+               source == damageSources.hotFloor()) {
       player.incrementStat(MoreStats.FIRE_TOTEM_POP);
     } else if (source == damageSources.freeze()) {
       player.incrementStat(MoreStats.POWDER_SNOW_TOTEM_POP);
     }
+  }
+
+  @Unique
+  private LivingEntity self() {
+    return (LivingEntity) (Object) this;
   }
 }
