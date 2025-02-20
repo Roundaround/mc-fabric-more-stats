@@ -12,6 +12,6 @@ import net.minecraft.client.MinecraftClient;
 public abstract class MinecraftClientMixin {
   @Inject(method = "handleInputEvents", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/option/GameOptions;setPerspective(Lnet/minecraft/client/option/Perspective;)V"))
   public void onPerspectiveChange(CallbackInfo info) {
-    ClientNetworking.sendTogglePerspectivePacket();
+    ClientNetworking.sendTogglePerspective();
   }
 }
