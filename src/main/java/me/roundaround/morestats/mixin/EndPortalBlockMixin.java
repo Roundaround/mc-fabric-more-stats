@@ -4,6 +4,7 @@ import me.roundaround.morestats.MoreStats;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.EndPortalBlock;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityCollisionHandler;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -19,7 +20,14 @@ public class EndPortalBlockMixin {
       value = "INVOKE", target = "Lnet/minecraft/server/network/ServerPlayerEntity;detachForDimensionChange()V"
   )
   )
-  private void onShowCredits(BlockState state, World world, BlockPos pos, Entity entity, CallbackInfo ci) {
+  private void onShowCredits(
+      BlockState state,
+      World world,
+      BlockPos pos,
+      Entity entity,
+      EntityCollisionHandler handler,
+      CallbackInfo ci
+  ) {
     if (!(entity instanceof ServerPlayerEntity player)) {
       return;
     }

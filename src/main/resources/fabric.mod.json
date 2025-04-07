@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
-  "id": "morestats",
+  "id": "${modId}",
   "version": "${version}",
   "name": "More Stats",
-  "description": "Track more stats in your Minecraft worlds.\n${library}",
+  "description": "Track more stats in your Minecraft worlds.",
   "authors": [
     "Roundaround"
   ],
@@ -13,20 +13,5 @@
     "issues": "https://github.com/Roundaround/mc-fabric-more-stats/issues"
   },
   "license": "MIT",
-  "icon": "assets/morestats/icon.png",
-  "environment": "*",
-  "entrypoints": {
-    "main": [
-      "me.roundaround.morestats.MoreStatsMod"
-    ]
-  },
-  "mixins": [
-    "morestats.mixins.json"
-  ],
-  "accessWidener": "morestats.accesswidener",
-  "depends": {
-    "fabricloader": "*",
-    "fabric-api": "*",
-    "minecraft": "1.21.*"
-  }
+  "accessWidener": "morestats.accesswidener"
 }

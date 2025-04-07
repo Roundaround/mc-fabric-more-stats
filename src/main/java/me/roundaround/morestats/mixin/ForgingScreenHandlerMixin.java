@@ -26,7 +26,7 @@ public abstract class ForgingScreenHandlerMixin {
       return;
     }
 
-    input = Optional.of(self.getSlot(0).getStack().copy());
+    this.input = Optional.of(self.getSlot(0).getStack().copy());
   }
 
   @Inject(method = "quickMove", at = @At(value = "RETURN"))
@@ -36,15 +36,15 @@ public abstract class ForgingScreenHandlerMixin {
       return;
     }
 
-    if (input.isEmpty()) {
+    if (this.input.isEmpty()) {
       return;
     }
 
     ItemStack stack = info.getReturnValue();
-    if (ItemStackHelper.hasCustomName(stack) && !stack.getName().equals(input.get().getName())) {
+    if (ItemStackHelper.hasCustomName(stack) && !stack.getName().equals(this.input.get().getName())) {
       player.increaseStat(MoreStats.ITEM_RENAME, stack.getCount());
     }
 
-    input = Optional.empty();
+    this.input = Optional.empty();
   }
 }

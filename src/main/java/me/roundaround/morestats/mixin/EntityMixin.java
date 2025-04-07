@@ -33,9 +33,9 @@ public abstract class EntityMixin {
   private void onTeleport(CallbackInfo ci) {
     this.getCurrentPortal().ifPresent((portal) -> {
       switch (portal) {
-        case NetherPortalBlock unused -> this.incrementStat(MoreStats.NETHER_PORTAL);
-        case EndPortalBlock unused -> this.incrementStat(MoreStats.END_PORTAL);
-        case EndGatewayBlock unused -> this.incrementStat(MoreStats.END_GATEWAY);
+        case NetherPortalBlock ignored -> this.incrementStat(MoreStats.NETHER_PORTAL);
+        case EndPortalBlock ignored -> this.incrementStat(MoreStats.END_PORTAL);
+        case EndGatewayBlock ignored -> this.incrementStat(MoreStats.END_GATEWAY);
         default -> this.incrementStat(MoreStats.OTHER_PORTALS);
       }
     });

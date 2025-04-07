@@ -1,5 +1,6 @@
 package me.roundaround.morestats;
 
+import me.roundaround.morestats.generated.Constants;
 import net.minecraft.entity.EntityType;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
@@ -67,15 +68,15 @@ public class MoreStats {
   public static final Identifier OTHER_PORTALS = register("other_portals", StatFormatter.DEFAULT);
 
   private static Identifier register(String id, StatFormatter formatter) {
-    Identifier identifier = Identifier.of(MoreStatsMod.MOD_ID, id);
+    Identifier identifier = Identifier.of(Constants.MOD_ID, id);
     Registry.register(Registries.CUSTOM_STAT, id, identifier);
     Stats.CUSTOM.getOrCreateStat(identifier, formatter);
     return identifier;
   }
 
   private static <T> StatType<T> registerType(String id, Registry<T> registry) {
-    Identifier identifier = Identifier.of(MoreStatsMod.MOD_ID, id);
-    MutableText text = Text.translatable("stat_type." + MoreStatsMod.MOD_ID + "." + id);
+    Identifier identifier = Identifier.of(Constants.MOD_ID, id);
+    MutableText text = Text.translatable("stat_type." + Constants.MOD_ID + "." + id);
     return Registry.register(Registries.STAT_TYPE, identifier, new StatType<T>(registry, text));
   }
 
