@@ -32,7 +32,7 @@ public abstract class EnderPearlEntityMixin {
       return;
     }
 
-    this.position = Optional.of(player.getPos());
+    this.position = Optional.of(new Vec3d(player.getX(), player.getY(), player.getZ()));
   }
 
   @Inject(

@@ -37,7 +37,7 @@ public abstract class LivingEntityMixin {
       return;
     }
 
-    DamageSources damageSources = player.getWorld().getDamageSources();
+    DamageSources damageSources = player.getEntityWorld().getDamageSources();
 
     if (source == damageSources.flyIntoWall()) {
       player.incrementStat(MoreStats.CRUNCH_TOTEM_POP);

@@ -9,14 +9,16 @@ public final class ServerNetworking {
   }
 
   public static void registerReceivers() {
-    ServerPlayNetworking.registerGlobalReceiver(Networking.TogglePerspectiveC2S.ID,
+    ServerPlayNetworking.registerGlobalReceiver(
+        Networking.TogglePerspectiveC2S.ID,
         ServerNetworking::handleTogglePerspective
     );
   }
 
   public static void handleTogglePerspective(
-      Networking.TogglePerspectiveC2S payload, ServerPlayNetworking.Context context
+      Networking.TogglePerspectiveC2S payload,
+      ServerPlayNetworking.Context context
   ) {
-    context.player().server.execute(() -> context.player().incrementStat(MoreStats.TOGGLE_PERSPECTIVE));
+    context.server().execute(() -> context.player().incrementStat(MoreStats.TOGGLE_PERSPECTIVE));
   }
 }

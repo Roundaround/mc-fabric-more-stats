@@ -5,10 +5,12 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.StatsScreen;
+import net.minecraft.client.gui.widget.AlwaysSelectedEntryListWidget;
 import net.minecraft.entity.EntityType;
 import net.minecraft.stat.StatFormatter;
 import net.minecraft.stat.StatHandler;
 import net.minecraft.text.Text;
+import net.minecraft.util.Colors;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -22,10 +24,6 @@ public abstract class EntityStatsListWidgetEntryMixin {
   @Unique
   private static final MinecraftClient CLIENT = MinecraftClient.getInstance();
 
-  @Final
-  @Shadow
-  private Text entityTypeName;
-
   @Unique
   private Text damagedText;
   @Unique
@@ -38,6 +36,10 @@ public abstract class EntityStatsListWidgetEntryMixin {
   private Text totemsPoppedByText;
   @Unique
   private boolean totemsPoppedByAny = false;
+
+  @Final
+  @Shadow
+  private Text entityTypeName;
 
   @Inject(
       method = "<init>(Lnet/minecraft/client/gui/screen/StatsScreen$EntityStatsListWidget;" +
@@ -86,11 +88,6 @@ public abstract class EntityStatsListWidgetEntryMixin {
   @Inject(method = "render", at = @At(value = "RETURN"))
   private void onRender(
       DrawContext drawContext,
-      int index,
-      int y,
-      int x,
-      int entryWidth,
-      int entryHeight,
       int mouseX,
       int mouseY,
       boolean hovered,
@@ -98,24 +95,31 @@ public abstract class EntityStatsListWidgetEntryMixin {
       CallbackInfo info
   ) {
     TextRenderer textRenderer = CLIENT.textRenderer;
+    int x = self().getContentX();
+    int y = self().getContentY();
 
     drawContext.drawTextWithShadow(textRenderer,
         damagedText,
         x + 2 + 10,
         y + 1 + textRenderer.fontHeight * 3,
-        damagedAny ? 0x909090 : 0x606060
+        damagedAny ? Colors.ALTERNATE_WHITE : Colors.GRAY
     );
     drawContext.drawTextWithShadow(textRenderer,
         damagedByText,
         x + 2 + 10,
         y + 1 + textRenderer.fontHeight * 4,
-        damagedByAny ? 0x909090 : 0x606060
+        damagedByAny ? Colors.ALTERNATE_WHITE : Colors.GRAY
     );
     drawContext.drawTextWithShadow(textRenderer,
         totemsPoppedByText,
         x + 2 + 10,
         y + 1 + textRenderer.fontHeight * 5,
-        totemsPoppedByAny ? 0x909090 : 0x606060
+        totemsPoppedByAny ? Colors.ALTERNATE_WHITE : Colors.GRAY
     );
+  }
+
+  @Unique
+  private AlwaysSelectedEntryListWidget.Entry<?> self() {
+    return (AlwaysSelectedEntryListWidget.Entry<?>) (Object) this;
   }
 }

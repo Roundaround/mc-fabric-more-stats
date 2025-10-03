@@ -5,15 +5,16 @@ import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffectUtil;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.server.network.ServerPlayerEntity;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-@Mixin(PlayerEntity.class)
-public abstract class PlayerEntityMixin {
+@Mixin(ServerPlayerEntity.class)
+public abstract class ServerPlayerEntityMixin {
   @Inject(
-      method = "tick", at = @At(
+      method = "playerTick", at = @At(
       value = "INVOKE",
       target = "Lnet/minecraft/entity/player/HungerManager;update" +
                "(Lnet/minecraft/server/network/ServerPlayerEntity;)V"
