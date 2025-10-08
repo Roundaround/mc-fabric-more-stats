@@ -26,6 +26,7 @@ public class EndPortalBlockMixin {
       BlockPos pos,
       Entity entity,
       EntityCollisionHandler handler,
+      boolean bl,
       CallbackInfo ci
   ) {
     if (!(entity instanceof ServerPlayerEntity player)) {
